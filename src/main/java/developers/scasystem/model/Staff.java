@@ -25,7 +25,7 @@ public class Staff {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	
+	//test
 	@Column(name = "staffID",nullable = false)
 	private int StaffID;
 	
