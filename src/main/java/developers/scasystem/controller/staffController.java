@@ -1,6 +1,6 @@
 package developers.scasystem.controller;
 
-import java.util.Date;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -52,14 +52,6 @@ public class staffController {
 	public ResponseEntity<Staff> createStaff(@RequestBody Staff staff){
 		
 		try {
-//			Staff _staff=new Staff(
-//					staff.getStaffID(),
-//					staff.getFirstName(),
-//					staff.getLastName(),
-//					staff.getBirthDate(),
-//					staff.getPhone(),
-//					staff.getEmail(),
-//					staff.getUsertype());
 				return new ResponseEntity(staffRepository.save(staff),HttpStatus.OK);
 		}catch (Exception e) {
 			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
