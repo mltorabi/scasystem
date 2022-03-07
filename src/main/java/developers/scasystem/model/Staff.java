@@ -64,9 +64,21 @@ public class Staff {
 					@JoinColumn(name = "specialityID",referencedColumnName = "id")})
 	private Set<Speciality> Speciality = new HashSet<>();
 	
+	//a staff may write many posts
+	@JsonIgnore
+	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@JoinTable(name = "post_transaction",joinColumns = {
+			@JoinColumn(name = "staffID", referencedColumnName = "id")},inverseJoinColumns = {
+					@JoinColumn(name = "postID",referencedColumnName = "id")})
+	private Set<Blog> blogs = new HashSet<>();
+	
 	//a doctor may have many appointment
 	@OneToMany(mappedBy = "Staff", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
 	private Set<Appointment> appointments = new HashSet<>();
+	
+	//a staff may upload many images
+	@OneToMany(mappedBy = "Staff",cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+	private Set<Image> images = new HashSet<>();
 	public Staff() {
 		
 	}
@@ -75,6 +87,12 @@ public class Staff {
 	}
 	public void setAppointments(Set<Appointment> appointments) {
 		this.appointments = appointments;
+	}
+	public Set<Blog> getBlogs() {
+		return blogs;
+	}
+	public void setBlogs(Set<Blog> blogs) {
+		this.blogs = blogs;
 	}
 	public Staff(int StaffID, String FirstName, String LastName, Date BirthDate, String Phone, String Email, int UserType) {
 		this.StaffID = StaffID;
@@ -97,6 +115,12 @@ public class Staff {
 		return StaffID;
 	}
 
+	public Set<Image> getImages() {
+		return images;
+	}
+	public void setImages(Set<Image> images) {
+		this.images = images;
+	}
 	public void setStaffID(int staffID) {
 		StaffID = staffID;
 	}
@@ -162,5 +186,13 @@ public class Staff {
 	
 	public void RemoveAppointment(Appointment appointment) {
 		this.appointments.remove(appointment);
+	}
+	
+	public void AddImage(Image image) {
+		this.images.add(image);
+		image.setStaff(this);
+	}
+	public void RemoveImage(Image image) {
+		this.images.remove(image);
 	}
 }
