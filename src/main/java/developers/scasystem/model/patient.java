@@ -1,12 +1,17 @@
 package developers.scasystem.model;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -48,7 +53,25 @@ public class patient {
 	
 	@Column(name = "city")
 	private String City;
-
+	
+	@OneToMany(mappedBy = "patient",cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+	private Set<Appointment> appointments = new HashSet<>();
+	
+	public void AddAppointment(Appointment appointment) {
+		this.appointments.add(appointment);
+		appointment.setPatient(this);
+	}
+	
+	public void RemoveAppointment(Appointment appointment) {
+		this.appointments.remove(appointment);
+	}
+	
+	public Set<Appointment> getAppointments() {
+		return appointments;
+	}
+	public void setAppointments(Set<Appointment> appointments) {
+		this.appointments = appointments;
+	}
 	public patient() {
 		
 	}

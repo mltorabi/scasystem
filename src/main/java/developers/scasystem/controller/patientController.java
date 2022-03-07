@@ -30,6 +30,8 @@ public class patientController {
 	@Autowired
 	PatientRepository patientRepo;
 
+	
+	//display all patient
 	@GetMapping("/patient")
 	public ResponseEntity<List<patient>> getAllPatient(){
 		
@@ -53,6 +55,8 @@ public class patientController {
 		
 	}
 	
+	
+	//display patient by id
 	@GetMapping("/patient/{id}")
 	public ResponseEntity<patient> getAllPatientById(@PathVariable long id){
 		
@@ -86,6 +90,7 @@ public class patientController {
 	
 	
 	
+	//add patient
 	@PostMapping("/patient")
 	public ResponseEntity<patient> createPatient(@RequestBody patient patient){
 		
@@ -105,7 +110,7 @@ public class patientController {
 					patient.getPassword()
 					);
 			
-			return new ResponseEntity<>(patientRepo.save(_patient), HttpStatus.OK);
+			return new ResponseEntity<>(patientRepo.save(_patient), HttpStatus.CREATED);
 			
 			
 			
@@ -120,8 +125,10 @@ public class patientController {
 	}
 	
 	
+	
+	//edit patient
 	@PutMapping("/patient/{id}")
-	public ResponseEntity<patient> editPatient(@PathVariable long id, patient patient){
+	public ResponseEntity<patient> editPatient(@PathVariable long id,@RequestBody patient patient){
 		
 		try {
 			
@@ -165,6 +172,8 @@ public class patientController {
 	}
 	
 	
+	
+	//delete patient by id
 	@DeleteMapping("/patient/{id}")
 	public ResponseEntity<patient> deletePatientbyId(@PathVariable long id){
 			try {
@@ -185,7 +194,7 @@ public class patientController {
 	}
 	
 	
-	
+	//delete all patient
 	@DeleteMapping("/patient")
 	public ResponseEntity<patient> deleteAllPatient(){
 			try {
