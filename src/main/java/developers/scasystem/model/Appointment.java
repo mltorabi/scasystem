@@ -10,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -48,12 +47,23 @@ public class Appointment {
 	@JsonIgnore
 	private Staff staff;
 	
+	@ManyToOne(fetch = FetchType.LAZY,optional = false)
+	@JoinColumn(name = "patient_ID",nullable = false)
+	@JsonIgnore
+	private patient Patient;
+	
+	public patient getPatient() {
+		return Patient;
+	}
+	public void setPatient(patient patient) {
+		Patient = patient;
+	}
 	public Appointment() {
 		
 	}
 	public Appointment(int AppointmentID,Date AppointmentDate ,String StartTime, String EndTime, String Location, String RoomNumber ) {
 		this.AppointmentID = AppointmentID;
-		this.AppoitnemtnDate = AppoitnemtnDate;
+		this.AppoitnemtnDate = AppointmentDate;
 		this.StartTime = StartTime;
 		this.EndTime = EndTime;
 		this.Location = Location;
