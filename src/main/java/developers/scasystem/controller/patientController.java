@@ -41,9 +41,7 @@ public class patientController {
 			
 			patientRepo.findAll().forEach(patientList::add);
 			
-			
 			return new ResponseEntity<>(patientList, HttpStatus.OK);
-			
 			
 		}catch(Exception e) {
 			
@@ -58,7 +56,7 @@ public class patientController {
 	
 	//display patient by id
 	@GetMapping("/patient/{id}")
-	public ResponseEntity<patient> getAllPatientById(@PathVariable long id){
+	public ResponseEntity<patient> getAllPatientById(@PathVariable("id") long id){
 		
 		try {
 			
@@ -73,10 +71,8 @@ public class patientController {
 			}else {
 				
 				
-				return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
-			}
-
-			
+				return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+			}		
 			
 		}catch(Exception e) {
 			
@@ -96,23 +92,21 @@ public class patientController {
 		
 		try {
 			
-			patient _patient = new patient(
-					patient.getInsuranceNumber(),
-					patient.getFirstName(),
-					patient.getLastName(),
-					patient.getBirthDate(),
-					patient.getPhone(),
-					patient.getEmail(),
-					patient.getStreetAddress(),
-					patient.getProvince(),
-					patient.getPostalCode(),
-					patient.getCity(),
-					patient.getPassword()
-					);
+//			patient _patient = new patient(
+//					patient.getInsuranceNumber(),
+//					patient.getFirstName(),
+//					patient.getLastName(),
+//					patient.getBirthDate(),
+//					patient.getPhone(),
+//					patient.getEmail(),
+//					patient.getStreetAddress(),
+//					patient.getProvince(),
+//					patient.getPostalCode(),
+//					patient.getCity(),
+//					patient.getPassword()
+//					);
 			
-			return new ResponseEntity<>(patientRepo.save(_patient), HttpStatus.CREATED);
-			
-			
+			return new ResponseEntity<>(patientRepo.save(patient), HttpStatus.CREATED);
 			
 		}catch(Exception e) {
 			
@@ -128,10 +122,9 @@ public class patientController {
 	
 	//edit patient
 	@PutMapping("/patient/{id}")
-	public ResponseEntity<patient> editPatient(@PathVariable long id,@RequestBody patient patient){
+	public ResponseEntity<patient> editPatient(@PathVariable("id") long id,@RequestBody patient patient){
 		
 		try {
-			
 			
 			Optional<patient> _patient  = patientRepo.findById(id);
 			
@@ -150,17 +143,14 @@ public class patientController {
 			_patient.get().setCity(patient.getCity());
 			_patient.get().setPassword(patient.getPassword());
 			
-			
 			return new ResponseEntity<>(patientRepo.save(_patient.get()), HttpStatus.OK);
-			
 			
 			}
 			else {
-				return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+				return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 				
 			}
 	
-			
 		}catch(Exception e) {
 			
 			
@@ -172,10 +162,9 @@ public class patientController {
 	}
 	
 	
-	
 	//delete patient by id
 	@DeleteMapping("/patient/{id}")
-	public ResponseEntity<patient> deletePatientbyId(@PathVariable long id){
+	public ResponseEntity<patient> deletePatientbyId(@PathVariable("id") long id){
 			try {
 				
 				
@@ -190,7 +179,6 @@ public class patientController {
 				
 			}
 	
-	
 	}
 	
 	
@@ -198,7 +186,6 @@ public class patientController {
 	@DeleteMapping("/patient")
 	public ResponseEntity<patient> deleteAllPatient(){
 			try {
-				
 				
 				patientRepo.deleteAll();
 				
