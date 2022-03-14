@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,12 +15,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import developers.scasystem.model.PatientRepository;
 import developers.scasystem.model.patient;
 
-
+@CrossOrigin(origins = "http://localhost:8081")
 @RestController
 @RequestMapping("/api")
 public class patientController {
@@ -33,14 +35,16 @@ public class patientController {
 	
 	//display all patient
 	@GetMapping("/patient")
-	public ResponseEntity<List<patient>> getAllPatient(){
+	public ResponseEntity<List<patient>> getAllPatient(@RequestParam(required = false)int insuranceNumber ){
 		
 		try {
 			
 			List<patient> patientList = new ArrayList<patient>();
-			
-			patientRepo.findAll().forEach(patientList::add);
-			
+			if(insuranceNumber == 0) {
+				patientRepo.findAll().forEach(patientList::add);
+			} else {
+				patientRepo.findByInsurance(insuranceNumber).forEach(patientList::add);
+			}
 			return new ResponseEntity<>(patientList, HttpStatus.OK);
 			
 		}catch(Exception e) {
@@ -88,25 +92,12 @@ public class patientController {
 	
 	//add patient
 	@PostMapping("/patient")
-	public ResponseEntity<patient> createPatient(@RequestBody patient patient){
+	public ResponseEntity<patient> createPatient(@RequestBody patient patientBody){
 		
 		try {
+			patient _patient = patientRepo.save(new patient(patientBody.getInsuranceNumber(), patientBody.getFirstName(), patientBody.getLastName(), patientBody.getBirthDate(), patientBody.getPhone(), patientBody.getEmail(), patientBody.getStreetAddress(), patientBody.getProvince(), patientBody.getPostalCode(), patientBody.getCity(), patientBody.getPassword()));
 			
-//			patient _patient = new patient(
-//					patient.getInsuranceNumber(),
-//					patient.getFirstName(),
-//					patient.getLastName(),
-//					patient.getBirthDate(),
-//					patient.getPhone(),
-//					patient.getEmail(),
-//					patient.getStreetAddress(),
-//					patient.getProvince(),
-//					patient.getPostalCode(),
-//					patient.getCity(),
-//					patient.getPassword()
-//					);
-			
-			return new ResponseEntity<>(patientRepo.save(patient), HttpStatus.CREATED);
+			return new ResponseEntity<>(_patient, HttpStatus.CREATED);
 			
 		}catch(Exception e) {
 			
