@@ -2,6 +2,7 @@ package developers.scasystem.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -52,6 +54,22 @@ public class Appointment {
 	@JsonIgnore
 	private patient Patient;
 	
+	//an appointment may have one prescription
+	//the owner of the FK should take the JoinColumn
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "prescription_id",referencedColumnName = "id")
+	@JsonIgnore
+	private Prescription prescription;
+	
+	@Column(name = "status")
+	private String status;
+	
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	public patient getPatient() {
 		return Patient;
 	}
@@ -95,6 +113,12 @@ public class Appointment {
 	}
 	public String getEndTime() {
 		return EndTime;
+	}
+	public Prescription getPrescription() {
+		return prescription;
+	}
+	public void setPrescription(Prescription prescription) {
+		this.prescription = prescription;
 	}
 	public void setEndTime(String endTime) {
 		EndTime = endTime;

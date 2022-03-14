@@ -1,11 +1,21 @@
 package developers.scasystem.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 
@@ -29,9 +39,24 @@ public class Medication {
 	@Column(name = "Overdose")
 	private String medOverdose;
 	
+	//a medication may be in one or more prescription
+	@JsonIgnore
+	@ManyToMany(fetch = FetchType.LAZY,cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinTable(name = "med_pre_tb",joinColumns = {
+			@JoinColumn(name = "med_id",referencedColumnName = "id")},inverseJoinColumns = {
+					@JoinColumn(name = "presciprtion_id",referencedColumnName = "id")})
+	private Set<Prescription> prescriptions = new HashSet<>();
 	
 	
 	
+	public Set<Prescription> getPrescriptions() {
+		return prescriptions;
+	}
+
+	public void setPrescriptions(Set<Prescription> prescriptions) {
+		this.prescriptions = prescriptions;
+	}
+
 	public Medication() {
 		
 	}
