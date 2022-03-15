@@ -41,7 +41,7 @@ public class Medication {
 	
 	//a medication may be in one or more prescription
 	@JsonIgnore
-	@ManyToMany(fetch = FetchType.LAZY,cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@ManyToMany(fetch = FetchType.LAZY,cascade = {CascadeType.MERGE })
 	@JoinTable(name = "med_pre_tb",joinColumns = {
 			@JoinColumn(name = "med_id",referencedColumnName = "id")},inverseJoinColumns = {
 					@JoinColumn(name = "presciprtion_id",referencedColumnName = "id")})

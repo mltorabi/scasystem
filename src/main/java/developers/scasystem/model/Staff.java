@@ -56,7 +56,7 @@ public class Staff {
 	private int usertype;
 	//a doctor may have many specialty
 	@JsonIgnore
-	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
 	@JoinTable(name = "speciality_transaction", joinColumns = {
 			@JoinColumn(name = "staffID", referencedColumnName = "id")},inverseJoinColumns = {
 					@JoinColumn(name = "specialityID",referencedColumnName = "id")})
@@ -64,18 +64,18 @@ public class Staff {
 	
 	//a staff may write many posts
 	@JsonIgnore
-	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
 	@JoinTable(name = "post_transaction",joinColumns = {
 			@JoinColumn(name = "staffID", referencedColumnName = "id")},inverseJoinColumns = {
 					@JoinColumn(name = "id",referencedColumnName = "id")})
 	private Set<Blog> blog = new HashSet<>();
 	
 	//a doctor may have many appointment
-	@OneToMany(mappedBy = "Staff", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "Staff", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
 	private Set<Appointment> appointments = new HashSet<>();
 	
 	//a staff may upload many images
-	@OneToMany(mappedBy = "Staff",cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "Staff",cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
 	private Set<Image> images = new HashSet<>();
 	public Staff() {
 		

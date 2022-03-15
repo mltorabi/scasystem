@@ -37,7 +37,7 @@ public class Blog {
 	@Column(name = "post_content")
 	private String PostContent;
 	
-	@ManyToMany(mappedBy = "blog",fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToMany(mappedBy = "blog",fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
 	private Set<Staff> staff = new HashSet<>();
 	
 	public Blog() {

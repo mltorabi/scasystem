@@ -53,7 +53,7 @@ public class Appointment {
 	
 	//an appointment may have one prescription
 	//the owner of the FK should take the JoinColumn
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "prescription_id",referencedColumnName = "id")
 	@JsonIgnore
 	private Prescription prescription;

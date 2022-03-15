@@ -24,13 +24,13 @@ public class Prescription {
 	//an appointment may have one prescriptions
 	//a prescription has one appointment
 	
-	@OneToOne(mappedBy = "prescription",cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+	@OneToOne(mappedBy = "prescription",cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
 	private Appointment appointment;
 
 	//a prescription may have one or more medications
 	//a medication may have one or many prescription
 	
-	@ManyToMany(mappedBy = "prescription", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+	@ManyToMany(mappedBy = "prescription", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
 	private Set<Medication> Medications = new HashSet<>();
 
 	
