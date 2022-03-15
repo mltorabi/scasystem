@@ -39,6 +39,14 @@ public class Speciality {
 		this.staff.remove(staff);
 	}
 
+	public Speciality() {
+		
+	}
+	public Speciality(Set<Staff> staff, String specialityTitle, int experience) {
+		this.Speciality = specialityTitle;
+		this.Experience = experience;
+		this.staff = staff;
+	}
 	public long getId() {
 		return id;
 	}
