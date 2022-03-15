@@ -23,9 +23,6 @@ public class Appointment {
 	@GeneratedValue (strategy = GenerationType.AUTO)
 	private long id;
 	
-	@Column(name = "appointmentid",nullable = false)
-	private int AppointmentID;
-	
 	@Column(name = "appointmentdate",nullable = false)
 	private Date AppoitnemtnDate;
 	
@@ -79,8 +76,7 @@ public class Appointment {
 	public Appointment() {
 		
 	}
-	public Appointment(int AppointmentID,Date AppointmentDate ,String StartTime, String EndTime, String Location, String RoomNumber ) {
-		this.AppointmentID = AppointmentID;
+	public Appointment(Date AppointmentDate ,String StartTime, String EndTime, String Location, String RoomNumber ) {
 		this.AppoitnemtnDate = AppointmentDate;
 		this.StartTime = StartTime;
 		this.EndTime = EndTime;
@@ -92,12 +88,6 @@ public class Appointment {
 	}
 	public void setId(long id) {
 		this.id = id;
-	}
-	public int getAppointmentID() {
-		return AppointmentID;
-	}
-	public void setAppointmentID(int appointmentID) {
-		AppointmentID = appointmentID;
 	}
 	public Date getAppoitnemtnDate() {
 		return AppoitnemtnDate;
