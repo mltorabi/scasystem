@@ -29,13 +29,13 @@ public class SpecialityController {
 	SpecialityRepository specialityRep;
 	
 	@GetMapping("/speciality")
-	public ResponseEntity<List<Speciality>> showAllSpeciality(@RequestParam(required = false)String specilityTitle){
+	public ResponseEntity<List<Speciality>> showAllSpeciality(@RequestParam(required = false)String speciality){
 		try {
 			List<Speciality> specialities = new ArrayList<Speciality>();
-			if(specilityTitle  == null) {
+			if(speciality  == null) {
 				specialityRep.findAll().forEach(specialities::add);
 			}else {
-				specialityRep.findBySpecialityTitle(specilityTitle).forEach(specialities::add);
+				specialityRep.findByspeciality(speciality).forEach(specialities::add);
 			}
 			return new ResponseEntity<>(specialities,HttpStatus.OK);
 		}catch(Exception ex) {
@@ -55,7 +55,7 @@ public class SpecialityController {
 	@PostMapping("/speciality")
 	public ResponseEntity<Speciality> addSpeciality(@RequestBody Speciality specilaityBody){
 		try {
-			Speciality _speciality = specialityRep.save(new Speciality(specilaityBody.getStaff(), specilaityBody.getSpeciality(), specilaityBody.getExperience()));
+			Speciality _speciality = specialityRep.save(new Speciality(specilaityBody.getSpeciality(), specilaityBody.getExperience()));
 			return new ResponseEntity<>(_speciality,HttpStatus.CREATED);
 		}catch(Exception ex){
 			return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
@@ -68,7 +68,6 @@ public class SpecialityController {
 			Speciality _speciality = specialityData.get();
 			_speciality.setExperience(specialityUpdatebd.getExperience());
 			_speciality.setSpeciality(specialityUpdatebd.getSpeciality());
-			_speciality.setStaff(specialityUpdatebd.getStaff());
 			return new ResponseEntity<>(specialityRep.save(_speciality),HttpStatus.OK);
 		}else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

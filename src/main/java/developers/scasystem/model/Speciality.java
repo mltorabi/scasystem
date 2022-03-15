@@ -24,7 +24,7 @@ public class Speciality {
 	private Set<Staff> staff = new HashSet<>();
 	
 	@Column(name = "speciality")
-	private String Speciality;
+	private String speciality;
 	
 	@Column(name = "Experience")
 	private int Experience;
@@ -42,10 +42,9 @@ public class Speciality {
 	public Speciality() {
 		
 	}
-	public Speciality(Set<Staff> staff, String specialityTitle, int experience) {
-		this.Speciality = specialityTitle;
+	public Speciality(String specialityTitle, int experience) {
+		this.speciality = specialityTitle;
 		this.Experience = experience;
-		this.staff = staff;
 	}
 	public long getId() {
 		return id;
@@ -64,11 +63,11 @@ public class Speciality {
 	}
 
 	public String getSpeciality() {
-		return Speciality;
+		return speciality;
 	}
 
 	public void setSpeciality(String speciality) {
-		Speciality = speciality;
+		this.speciality = speciality;
 	}
 
 	public int getExperience() {

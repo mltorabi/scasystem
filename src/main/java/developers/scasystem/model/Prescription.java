@@ -81,12 +81,12 @@ public class Prescription {
 	
 	public void addMedication(Medication MedObj) {
 		this.Medications.add(MedObj);
-		MedObj.getPrescriptions().add(this);
+		MedObj.getPrescription().add(this);
 	}
 
 
 	public void removeMedication(Medication MedObj) {
-		MedObj.getPrescriptions().remove(this);
+		MedObj.getPrescription().remove(this);
 		this.Medications.remove(MedObj);
 	}
 

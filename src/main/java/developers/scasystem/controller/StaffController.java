@@ -32,9 +32,9 @@ public class StaffController {
 	@GetMapping("/staff")
 	public ResponseEntity<List<Staff>> findAllStaff(){
 		try {
-			return new ResponseEntity(staffRepository.findAll(),HttpStatus.OK);
+			return new ResponseEntity<>(staffRepository.findAll(),HttpStatus.OK);
 		}catch(Exception e){
-			return new ResponseEntity(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 
@@ -60,9 +60,9 @@ public class StaffController {
 //					staff.getPhone(),
 //					staff.getEmail(),
 //					staff.getUsertype());
-				return new ResponseEntity(staffRepository.save(staff),HttpStatus.OK);
+				return new ResponseEntity<>(staffRepository.save(staff),HttpStatus.OK);
 		}catch (Exception e) {
-			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -72,16 +72,16 @@ public class StaffController {
 		Optional<Staff> staffData=staffRepository.findById(id);
 		if(staffData.isPresent()) {
 			Staff _staff=staffData.get();
-			_staff.setStaffID(staff.getStaffID());
 			_staff.setFirstName(staff.getFirstName());
 			_staff.setLastName(staff.getLastName());
 			_staff.setBirthDate(staff.getBirthDate());
 			_staff.setPhone(staff.getPhone());
 			_staff.setEmail(staff.getEmail());
+			_staff.setPassword(staff.getPassword());
 			_staff.setUsertype(staff.getUsertype());
-			return new ResponseEntity(HttpStatus.OK);
+			return new ResponseEntity<>(HttpStatus.OK);
 		}else {
-			return new ResponseEntity(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}		
 	}
 
@@ -89,9 +89,9 @@ public class StaffController {
 	public ResponseEntity<HttpStatus> deleteStaffById(@PathVariable("id") long id)	{
 		try {
 			staffRepository.deleteById(id);
-			return new ResponseEntity(HttpStatus.NO_CONTENT);
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}catch (Exception e) {
-			return new ResponseEntity<HttpStatus>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -100,10 +100,10 @@ public class StaffController {
 
 		try {
 			staffRepository.deleteAll();
-			return new ResponseEntity(HttpStatus.NO_CONTENT);
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
 		}catch (Exception e) {
-			return new ResponseEntity<HttpStatus>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 

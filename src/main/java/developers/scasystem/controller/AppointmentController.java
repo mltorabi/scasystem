@@ -49,7 +49,7 @@ public class AppointmentController {
 			if (roomnumber == null) {
 				appRep.findAll().forEach(appointments::add);
 			} else {
-				appRep.findByRoomNumber(roomnumber).forEach(appointments::add);
+				appRep.findByroomnumber(roomnumber).forEach(appointments::add);
 			}
 			return new ResponseEntity<>(appointments, HttpStatus.OK);
 

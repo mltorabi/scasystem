@@ -26,8 +26,6 @@ public class Staff {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
-	@Column(name = "staffID",nullable = false)
-	private int StaffID;
 	
 	@Column(name = "firstname",nullable = false)
 	private String FirstName;
@@ -36,7 +34,7 @@ public class Staff {
 	private String LastName;
 	
 	@Column(name = "birthdate")
-	private Date BirthDate;
+	private String BirthDate;
 	
 	@Column(name = "phone",nullable = false)
 	private String Phone;
@@ -69,8 +67,8 @@ public class Staff {
 	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(name = "post_transaction",joinColumns = {
 			@JoinColumn(name = "staffID", referencedColumnName = "id")},inverseJoinColumns = {
-					@JoinColumn(name = "postID",referencedColumnName = "id")})
-	private Set<Blog> blogs = new HashSet<>();
+					@JoinColumn(name = "id",referencedColumnName = "id")})
+	private Set<Blog> blog = new HashSet<>();
 	
 	//a doctor may have many appointment
 	@OneToMany(mappedBy = "Staff", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
@@ -88,19 +86,20 @@ public class Staff {
 	public void setAppointments(Set<Appointment> appointments) {
 		this.appointments = appointments;
 	}
-	public Set<Blog> getBlogs() {
-		return blogs;
+
+	public Set<Blog> getBlog() {
+		return blog;
 	}
-	public void setBlogs(Set<Blog> blogs) {
-		this.blogs = blogs;
+	public void setBlog(Set<Blog> blog) {
+		this.blog = blog;
 	}
-	public Staff(int StaffID, String FirstName, String LastName, Date BirthDate, String Phone, String Email, int UserType) {
-		this.StaffID = StaffID;
+	public Staff(String FirstName, String LastName, String BirthDate, String Phone, String Email, String password, int UserType) {
 		this.FirstName = FirstName;
 		this.LastName = LastName;
 		this.BirthDate = BirthDate;
 		this.Phone = Phone;
 		this.Email = Email;
+		this.Password = password;
 		this.usertype = UserType;
 	}
 	public long getId() {
@@ -111,18 +110,12 @@ public class Staff {
 		this.id = id;
 	}
 
-	public int getStaffID() {
-		return StaffID;
-	}
 
 	public Set<Image> getImages() {
 		return images;
 	}
 	public void setImages(Set<Image> images) {
 		this.images = images;
-	}
-	public void setStaffID(int staffID) {
-		StaffID = staffID;
 	}
 
 	public String getFirstName() {
@@ -141,11 +134,11 @@ public class Staff {
 		LastName = lastName;
 	}
 
-	public Date getBirthDate() {
+	public String getBirthDate() {
 		return BirthDate;
 	}
 
-	public void setBirthDate(Date birthDate) {
+	public void setBirthDate(String birthDate) {
 		BirthDate = birthDate;
 	}
 

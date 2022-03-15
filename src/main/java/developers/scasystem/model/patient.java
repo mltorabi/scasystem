@@ -21,7 +21,7 @@ public class patient {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
-	@Column(name = "insurancenum",nullable = false)
+	@Column(name = "InsuranceNumber",nullable = false)
 	private int InsuranceNumber;
 	
 	@Column(name = "firstname",nullable = false)
@@ -31,9 +31,9 @@ public class patient {
 	private String LastName;
 	
 	@Column(name = "birthdate")
-	private Date BirthDate;
+	private String BirthDate;
 	
-	@Column(name = "phone",nullable = false)
+	@Column(name = "Phone",nullable = false)
 	private String Phone;
 	
 	@Column(name = "email")
@@ -75,7 +75,7 @@ public class patient {
 	public patient() {
 		
 	}
-	public patient(int InsuranceNumber,String FirstName, String LastName, Date BirthDate, String Phone, String Email, String StreetAddress, String Province, String PostalCode, String City, String Password) {
+	public patient(int InsuranceNumber,String FirstName, String LastName, String BirthDate, String Phone, String Email, String StreetAddress, String Province, String PostalCode, String City, String Password) {
 		this.InsuranceNumber = InsuranceNumber;
 		this.FirstName = FirstName;
 		this.LastName = LastName;
@@ -126,11 +126,11 @@ public class patient {
 		LastName = lastName;
 	}
 
-	public Date getBirthDate() {
+	public String getBirthDate() {
 		return BirthDate;
 	}
 
-	public void setBirthDate(Date birthDate) {
+	public void setBirthDate(String birthDate) {
 		BirthDate = birthDate;
 	}
 

@@ -35,15 +35,15 @@ public class patientController {
 	
 	//display all patient
 	@GetMapping("/patient")
-	public ResponseEntity<List<patient>> getAllPatient(@RequestParam(required = false)int insuranceNumber ){
+	public ResponseEntity<List<patient>> getAllPatient(@RequestParam(required = false)int InsuranceNumber ){
 		
 		try {
 			
 			List<patient> patientList = new ArrayList<patient>();
-			if(insuranceNumber == 0) {
+			if(InsuranceNumber == 0) {
 				patientRepo.findAll().forEach(patientList::add);
 			} else {
-				patientRepo.findByInsurance(insuranceNumber).forEach(patientList::add);
+				//patientRepo.findByInsuranceNumber(InsuranceNumber).forEach(patientList::add);
 			}
 			return new ResponseEntity<>(patientList, HttpStatus.OK);
 			

@@ -36,7 +36,7 @@ public class Appointment {
 	private String Location;
 	
 	@Column(name = "roomnumber")
-	private String RoomNumber;
+	private String roomnumber;
 	//doctor has many appointment
 	//appointment has one doctor 
 	//appointment has one patient
@@ -44,12 +44,12 @@ public class Appointment {
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "staff_ID",nullable = false)
 	@JsonIgnore
-	private Staff staff;
+	private Staff Staff;
 	
 	@ManyToOne(fetch = FetchType.LAZY,optional = false)
 	@JoinColumn(name = "patient_ID",nullable = false)
 	@JsonIgnore
-	private patient Patient;
+	private patient patient;
 	
 	//an appointment may have one prescription
 	//the owner of the FK should take the JoinColumn
@@ -68,10 +68,10 @@ public class Appointment {
 		this.status = status;
 	}
 	public patient getPatient() {
-		return Patient;
+		return patient;
 	}
 	public void setPatient(patient patient) {
-		Patient = patient;
+		patient = patient;
 	}
 	public Appointment() {
 		
@@ -81,7 +81,7 @@ public class Appointment {
 		this.StartTime = StartTime;
 		this.EndTime = EndTime;
 		this.Location = Location;
-		this.RoomNumber = RoomNumber;
+		this.roomnumber = RoomNumber;
 	}
 	public long getId() {
 		return id;
@@ -120,16 +120,16 @@ public class Appointment {
 		Location = location;
 	}
 	public String getRoomNumber() {
-		return RoomNumber;
+		return roomnumber;
 	}
 	public void setRoomNumber(String roomNumber) {
-		RoomNumber = roomNumber;
+		roomnumber = roomNumber;
 	}
 	public Staff getStaff() {
-		return staff;
+		return Staff;
 	}
 	public void setStaff(Staff staff) {
-		this.staff = staff;
+		this.Staff = staff;
 	}
 	
 	

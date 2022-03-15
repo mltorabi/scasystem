@@ -38,7 +38,7 @@ public class Blog {
 	private String PostContent;
 	
 	@ManyToMany(mappedBy = "blog",fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-	private Set<Staff> writers = new HashSet<>();
+	private Set<Staff> staff = new HashSet<>();
 	
 	public Blog() {
 		
@@ -101,20 +101,20 @@ public class Blog {
 	}
 
 	public Set<Staff> getWriters() {
-		return writers;
+		return staff;
 	}
 
-	public void setWriters(Set<Staff> writers) {
-		this.writers = writers;
+	public void setWriters(Set<Staff> staff) {
+		this.staff = staff;
 	}
 
-	public void AddWriter(Staff writer) {
-		this.writers.add(writer);
-		writer.getBlogs().add(this);
+	public void AddWriter(Staff staff) {
+		this.staff.add(staff);
+		staff.getBlog().add(this);
 	}
 	
-	public void RemoveWriter(Staff writer) {
-		this.writers.remove(writer);
-		writer.getBlogs().remove(this);
+	public void RemoveWriter(Staff staff) {
+		this.staff.remove(staff);
+		staff.getBlog().remove(this);
 	}
 }

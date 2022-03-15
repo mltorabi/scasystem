@@ -31,7 +31,7 @@ public class Image {
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "staff_ID",nullable = false)
 	@JsonIgnore
-	private Staff staff;
+	private Staff Staff;
 	
 	public Image() {
 		
@@ -76,11 +76,11 @@ public class Image {
 	}
 
 	public Staff getStaff() {
-		return staff;
+		return Staff;
 	}
 
 	public void setStaff(Staff staff) {
-		this.staff = staff;
+		this.Staff = staff;
 	}
 	
 	

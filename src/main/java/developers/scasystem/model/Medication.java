@@ -45,16 +45,18 @@ public class Medication {
 	@JoinTable(name = "med_pre_tb",joinColumns = {
 			@JoinColumn(name = "med_id",referencedColumnName = "id")},inverseJoinColumns = {
 					@JoinColumn(name = "presciprtion_id",referencedColumnName = "id")})
-	private Set<Prescription> prescriptions = new HashSet<>();
+	private Set<Prescription> prescription = new HashSet<>();
 	
 	
 	
-	public Set<Prescription> getPrescriptions() {
-		return prescriptions;
+//name of mapped by and the method here should be the same
+
+	public Set<Prescription> getPrescription() {
+		return prescription;
 	}
 
-	public void setPrescriptions(Set<Prescription> prescriptions) {
-		this.prescriptions = prescriptions;
+	public void setPrescription(Set<Prescription> prescription) {
+		this.prescription = prescription;
 	}
 
 	public Medication() {
