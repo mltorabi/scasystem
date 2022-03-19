@@ -20,7 +20,7 @@ public class Speciality {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
-	@ManyToMany(mappedBy = "Speciality", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+	@ManyToMany(mappedBy = "Speciality", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private Set<Staff> staff = new HashSet<>();
 	
 	@Column(name = "speciality")
