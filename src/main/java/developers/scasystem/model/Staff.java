@@ -55,7 +55,7 @@ public class Staff {
 	@Column(name = "usertype")
 	private int usertype;
 	//a doctor may have many specialty
-	@JsonIgnore
+	
 	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(name = "speciality_transaction", joinColumns = {
 			@JoinColumn(name = "staffID", referencedColumnName = "id")},inverseJoinColumns = {

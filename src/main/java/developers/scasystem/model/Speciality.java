@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "Speciality")
 public class Speciality {
@@ -21,6 +23,7 @@ public class Speciality {
 	private long id;
 	
 	@ManyToMany(mappedBy = "Speciality", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@JsonIgnore
 	private Set<Staff> staff = new HashSet<>();
 	
 	@Column(name = "speciality")

@@ -42,7 +42,7 @@ public class ScasystemApplication {
 					new Speciality("General", 10)
 			};
 			specialites[0].AddStaff(Staffs[0]);
-			specialites[1].AddStaff(Staffs[0]);
+			specialites[1].AddStaff(Staffs[1]);
 			for (int i = 0; i < Staffs.length; i++) {
 				staffRep.save(Staffs[i]);
 			}
