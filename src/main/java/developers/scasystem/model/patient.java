@@ -54,7 +54,7 @@ public class patient {
 	@Column(name = "city")
 	private String City;
 	
-	@OneToMany(mappedBy = "patient",cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "patient",cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
 	private Set<Appointment> appointments = new HashSet<>();
 	
 	public void AddAppointment(Appointment appointment) {

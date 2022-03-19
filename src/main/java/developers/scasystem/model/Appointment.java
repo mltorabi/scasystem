@@ -41,12 +41,12 @@ public class Appointment {
 	//appointment has one doctor 
 	//appointment has one patient
 	//patient has many appointment
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL, optional = false)
 	@JoinColumn(name = "staff_ID",nullable = false)
 	@JsonIgnore
 	private Staff Staff;
 	
-	@ManyToOne(fetch = FetchType.LAZY,optional = false)
+	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,optional = false)
 	@JoinColumn(name = "patient_ID",nullable = false)
 	@JsonIgnore
 	private patient patient;

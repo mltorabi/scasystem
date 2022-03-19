@@ -28,10 +28,10 @@ public class BlogController {
 	@GetMapping("/blog")
 	public ResponseEntity<List<Blog>> findAllBlog() {
 		try {
-			return new ResponseEntity(blogRepository.findAll(), HttpStatus.OK);
+			return new ResponseEntity<>(blogRepository.findAll(), HttpStatus.OK);
 
 		} catch (Exception e) {
-			return new ResponseEntity(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 
@@ -39,18 +39,18 @@ public class BlogController {
 	public ResponseEntity<Blog> findById(@PathVariable("id") long id) {
 		Optional<Blog> blogData = blogRepository.findById(id);
 		if (blogData.isPresent()) {
-			return new ResponseEntity(blogData.get(), HttpStatus.OK);
+			return new ResponseEntity<>(blogData.get(), HttpStatus.OK);
 		} else {
-			return new ResponseEntity(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 	
 	@PostMapping("/blog")
 	public ResponseEntity<Blog> createBlog(@RequestBody Blog blog){
 		try {
-			return new ResponseEntity(blogRepository.save(blog),HttpStatus.OK);
+			return new ResponseEntity<>(blogRepository.save(blog),HttpStatus.OK);
 		}catch (Exception e) {
-			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
@@ -65,9 +65,9 @@ public class BlogController {
 			_blog.setPublishDate(blog.getPublishDate());
 			_blog.setPublishTime(blog.getPublishTime());
 			_blog.setWriters(blog.getWriters());		
-			return new ResponseEntity(blogRepository.save(_blog),HttpStatus.OK);
+			return new ResponseEntity<>(blogRepository.save(_blog),HttpStatus.OK);
 		}else {
-			return new ResponseEntity(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 	
@@ -76,21 +76,21 @@ public class BlogController {
 	public ResponseEntity<HttpStatus> deleteStaffById(@PathVariable("id") long id)	{
 		try {
 			blogRepository.deleteById(id);
-			return new ResponseEntity(HttpStatus.NO_CONTENT);
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}catch (Exception e) {
-			return new ResponseEntity<HttpStatus>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
-	@DeleteMapping("/staff")
-	public ResponseEntity<HttpStatus> deleteAllStaff(){
+	@DeleteMapping("/blog")
+	public ResponseEntity<HttpStatus> deleteAllBlogs(){
 
 		try {
 			blogRepository.deleteAll();
-			return new ResponseEntity(HttpStatus.NO_CONTENT);
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
 		}catch (Exception e) {
-			return new ResponseEntity<HttpStatus>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 

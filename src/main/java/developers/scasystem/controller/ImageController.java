@@ -28,10 +28,10 @@ public class ImageController {
 	@GetMapping("/image")
 	public ResponseEntity<List<Image>> findAllImage() {
 		try {
-			return new ResponseEntity(imageRepository.findAll(), HttpStatus.OK);
+			return new ResponseEntity<>(imageRepository.findAll(), HttpStatus.OK);
 
 		} catch (Exception e) {
-			return new ResponseEntity(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 
@@ -39,18 +39,18 @@ public class ImageController {
 	public ResponseEntity<Image> findById(@PathVariable("id") long id) {
 		Optional<Image> imageData = imageRepository.findById(id);
 		if (imageData.isPresent()) {
-			return new ResponseEntity(imageData.get(), HttpStatus.OK);
+			return new ResponseEntity<>(imageData.get(), HttpStatus.OK);
 		} else {
-			return new ResponseEntity(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 	
 	@PostMapping("/image")
 	public ResponseEntity<Image> createImage(@RequestBody Image image){
 		try {
-			return new ResponseEntity(imageRepository.save(image),HttpStatus.OK);
+			return new ResponseEntity<>(imageRepository.save(image),HttpStatus.OK);
 		}catch (Exception e) {
-			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
@@ -64,9 +64,9 @@ public class ImageController {
 			_image.setPictureCategory(image.getPictureCategory());
 			_image.setStaff(image.getStaff());
 				
-			return new ResponseEntity(imageRepository.save(_image),HttpStatus.OK);
+			return new ResponseEntity<>(imageRepository.save(_image),HttpStatus.OK);
 		}else {
-			return new ResponseEntity(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 	
@@ -75,21 +75,21 @@ public class ImageController {
 	public ResponseEntity<HttpStatus> deleteStaffById(@PathVariable("id") long id)	{
 		try {
 			imageRepository.deleteById(id);
-			return new ResponseEntity(HttpStatus.NO_CONTENT);
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}catch (Exception e) {
-			return new ResponseEntity<HttpStatus>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
-	@DeleteMapping("/staff")
-	public ResponseEntity<HttpStatus> deleteAllStaff(){
+	@DeleteMapping("/image")
+	public ResponseEntity<HttpStatus> deleteAllImages(){
 
 		try {
 			imageRepository.deleteAll();
-			return new ResponseEntity(HttpStatus.NO_CONTENT);
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
 		}catch (Exception e) {
-			return new ResponseEntity<HttpStatus>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 
