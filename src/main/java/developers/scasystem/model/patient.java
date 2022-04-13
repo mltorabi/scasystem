@@ -21,8 +21,8 @@ public class patient {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
-	@Column(name = "InsuranceNumber",nullable = false)
-	private int InsuranceNumber;
+	@Column(name = "insuranceNumber",nullable = false)
+	private int insuranceNumber;
 	
 	@Column(name = "firstname",nullable = false)
 	private String FirstName;
@@ -76,7 +76,7 @@ public class patient {
 		
 	}
 	public patient(int InsuranceNumber,String FirstName, String LastName, String BirthDate, String Phone, String Email, String StreetAddress, String Province, String PostalCode, String City, String Password) {
-		this.InsuranceNumber = InsuranceNumber;
+		this.insuranceNumber = InsuranceNumber;
 		this.FirstName = FirstName;
 		this.LastName = LastName;
 		this.BirthDate = BirthDate;
@@ -103,11 +103,11 @@ public class patient {
 	}
 
 	public int getInsuranceNumber() {
-		return InsuranceNumber;
+		return insuranceNumber;
 	}
 
 	public void setInsuranceNumber(int insuranceNumber) {
-		InsuranceNumber = insuranceNumber;
+		this.insuranceNumber = insuranceNumber;
 	}
 
 	public String getFirstName() {

@@ -35,16 +35,13 @@ public class patientController {
 	
 	//display all patient
 	@GetMapping("/patient")
-	public ResponseEntity<List<patient>> getAllPatient(@RequestParam(required = false)int InsuranceNumber ){
+	public ResponseEntity<List<patient>> getAllPatient() {
 		
 		try {
 			
 			List<patient> patientList = new ArrayList<patient>();
-			if(InsuranceNumber == 0) {
-				patientRepo.findAll().forEach(patientList::add);
-			} else {
-				//patientRepo.findByInsuranceNumber(InsuranceNumber).forEach(patientList::add);
-			}
+			patientRepo.findAll().forEach(patientList::add);
+		
 			return new ResponseEntity<>(patientList, HttpStatus.OK);
 			
 		}catch(Exception e) {
@@ -100,7 +97,6 @@ public class patientController {
 			return new ResponseEntity<>(_patient, HttpStatus.CREATED);
 			
 		}catch(Exception e) {
-			
 			
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 			

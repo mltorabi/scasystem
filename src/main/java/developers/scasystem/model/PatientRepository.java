@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PatientRepository extends JpaRepository<patient, Long> {
-	//List<patient> findByInsuranceNumber(int InsuranceNumber);
+	List<patient> findByInsuranceNumber(int InsuranceNumber);
 	
 
 }
