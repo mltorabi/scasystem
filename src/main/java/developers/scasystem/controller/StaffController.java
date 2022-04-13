@@ -79,7 +79,7 @@ public class StaffController {
 			_staff.setEmail(staff.getEmail());
 			_staff.setPassword(staff.getPassword());
 			_staff.setUsertype(staff.getUsertype());
-			return new ResponseEntity<>(HttpStatus.OK);
+			return new ResponseEntity<>(staffRepository.save(_staff),HttpStatus.OK);
 		}else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}		
