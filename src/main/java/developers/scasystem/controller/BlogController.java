@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,13 +18,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import developers.scasystem.model.Blog;
 import developers.scasystem.model.BlogRepository;
-
+import developers.scasystem.model.Staff;
+import developers.scasystem.model.StaffRepository;
+import developers.scasystem.response.MessageResponse;
+@CrossOrigin(origins = "http://localhost:8081")
 @RestController
 @RequestMapping("/api")
 public class BlogController {
 
 	@Autowired
 	BlogRepository blogRepository;
+	
+	@Autowired
+	StaffRepository staffRep;
 
 	@GetMapping("/blog")
 	public ResponseEntity<List<Blog>> findAllBlog() {
@@ -45,12 +52,19 @@ public class BlogController {
 		}
 	}
 	
-	@PostMapping("/blog")
-	public ResponseEntity<Blog> createBlog(@RequestBody Blog blog){
+	@PostMapping("/{uid}/blog")
+	public ResponseEntity<?> createBlog(@PathVariable("uid") Long uid, @RequestBody Blog blog){
 		try {
-			return new ResponseEntity<>(blogRepository.save(blog),HttpStatus.OK);
+			Optional<Staff> staffData = staffRep.findById(uid);
+			if(staffData.isPresent()) {
+				blog.AddWriter(staffData.get());
+				return new ResponseEntity<>(blogRepository.save(blog),HttpStatus.OK);
+			}
+			MessageResponse msg = new MessageResponse("Invalid user");
+			return new ResponseEntity<>(msg,HttpStatus.OK);
 		}catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			MessageResponse msg = new MessageResponse("Server Error");
+			return new ResponseEntity<>(msg,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	

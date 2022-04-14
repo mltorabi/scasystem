@@ -40,7 +40,7 @@ public class Staff {
 	private String Phone;
 	
 	@Column(name = "email")
-	private String Email;
+	private String email;
 	
 	@Column(name = "passsword",nullable = false)
 	private String Password;
@@ -98,7 +98,7 @@ public class Staff {
 		this.LastName = LastName;
 		this.BirthDate = BirthDate;
 		this.Phone = Phone;
-		this.Email = Email;
+		this.email = Email;
 		this.Password = password;
 		this.usertype = UserType;
 	}
@@ -151,11 +151,11 @@ public class Staff {
 	}
 
 	public String getEmail() {
-		return Email;
+		return email;
 	}
 
 	public void setEmail(String email) {
-		Email = email;
+		this.email = email;
 	}
 
 	public int getUsertype() {

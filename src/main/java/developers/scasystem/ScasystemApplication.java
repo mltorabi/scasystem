@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import developers.scasystem.model.AppointmentRepository;
+import developers.scasystem.model.Blog;
 import developers.scasystem.model.BlogRepository;
 import developers.scasystem.model.ImageRepository;
 import developers.scasystem.model.MedicationRepository;
@@ -29,18 +30,22 @@ public class ScasystemApplication {
 		return args->{
 			patient[] Pateints = {
 					new patient(123456, "Leo", "Xu", "1980-01-12", "778123456", "test@mail.com", "Vacnouver 123", "BC", "V5Z 1A2", "Vancouver", "test1234"),
-					new patient(123456, "Summer", "Gumit","1988-05-12", "778925879", "test2@mail.com", "Vacnouver 345", "BC", "V5Z 1A2", "Vancouver", "test234"),
-					new patient(123456, "Milad", "Torabi", "1988-08-12", "778123445", "test3@mail.com", "Vacnouver 987", "BC", "V5Z 1A2", "Vancouver", "test987654")
+					new patient(456321, "Summer", "Gumit","1988-05-12", "778925879", "test2@mail.com", "Vacnouver 345", "BC", "V5Z 1A2", "Vancouver", "test234"),
+					new patient(987654, "Milad", "Torabi", "1988-08-12", "778123445", "test3@mail.com", "Vacnouver 987", "BC", "V5Z 1A2", "Vancouver", "test987654")
 			};
 			Staff[] Staffs = {
 					new Staff("Ivan", "Wong", "1970-04-05", "998778554", "test@mail.com","test1234", 0),
-					new Staff("Mani", "Amini", "2000-04-05", "998778554", "test12@mail.com","test1234", 1),
+					new Staff("Homar", "Gonzales", "2000-04-05", "998778554", "test12@mail.com","test1234", 1),
 					new Staff("Sara", "Wong", "1990-04-05", "998778554", "test23@mail.com","test1234", 0),
 			};
 			Speciality[] specialites = {
 					new Speciality("Cardiology", 5),
 					new Speciality("General", 10)
 			};
+			Blog[] blogs = {
+					new Blog("Medical", "2022", "13:00", "test post", "test medical blog post")
+			};
+			blogs[0].AddWriter(Staffs[0]);
 			specialites[0].AddStaff(Staffs[0]);
 			specialites[1].AddStaff(Staffs[1]);
 			for (int i = 0; i < Staffs.length; i++) {
@@ -49,6 +54,7 @@ public class ScasystemApplication {
 			for (int i = 0; i < specialites.length; i++) {
 				specialRep.save(specialites[i]);
 			}
+			blogRep.save(blogs[0]);
 			for (int i = 0; i < Pateints.length; i++) {
 				pedRep.save(Pateints[i]);
 			}

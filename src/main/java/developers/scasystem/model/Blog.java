@@ -23,10 +23,10 @@ public class Blog {
 	private long id;
 	
 	@Column(name = "category")
-	private int Category;
+	private String Category;
 	
 	@Column(name = "pb_date")
-	private Date PublishDate;
+	private String PublishDate;
 	
 	@Column(name = "pb_time")
 	private String PublishTime;
@@ -44,7 +44,7 @@ public class Blog {
 		
 	}
 	
-	public Blog(int Category, Date PublishDate, String PublishTime, String PostTitle, String PostContent) {
+	public Blog(String Category, String PublishDate, String PublishTime, String PostTitle, String PostContent) {
 		this.Category = Category;
 		this.PostTitle = PostTitle;
 		this.PublishDate = PublishDate;
@@ -60,19 +60,19 @@ public class Blog {
 		this.id = id;
 	}
 
-	public int getCategory() {
+	public String getCategory() {
 		return Category;
 	}
 
-	public void setCategory(int category) {
+	public void setCategory(String category) {
 		Category = category;
 	}
 
-	public Date getPublishDate() {
+	public String getPublishDate() {
 		return PublishDate;
 	}
 
-	public void setPublishDate(Date publishDate) {
+	public void setPublishDate(String publishDate) {
 		PublishDate = publishDate;
 	}
 
