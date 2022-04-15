@@ -22,6 +22,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import developers.scasystem.model.Appointment;
 import developers.scasystem.model.AppointmentRepository;
+import developers.scasystem.model.PatientRepository;
+import developers.scasystem.model.Staff;
+import developers.scasystem.model.StaffRepository;
+import developers.scasystem.model.patient;
+import developers.scasystem.response.MessageResponse;
 
 @CrossOrigin(origins = "http://localhost:8081")
 @RestController
@@ -29,6 +34,12 @@ import developers.scasystem.model.AppointmentRepository;
 public class AppointmentController {
 	@Autowired
 	AppointmentRepository appRep;
+	
+	@Autowired
+	StaffRepository staffRep;
+	
+	@Autowired
+	PatientRepository patientRep;
 	
 	@GetMapping("/appointment/{id}")
 	public ResponseEntity<Appointment> getAppointmentById(@PathVariable("id") long id) {
@@ -59,13 +70,27 @@ public class AppointmentController {
 
 	}
 	
-	@PostMapping("/appointment")
-	public ResponseEntity<Appointment> createAppointment(@RequestBody Appointment appointmentBody) {
+	@PostMapping("/{sid}/{uid}/appointment")
+	public ResponseEntity<?> createAppointment(@PathVariable("sid") Long sid,@PathVariable("uid") Long uid, @RequestBody Appointment appointmentBody) {
 		try {
-			Appointment _Appointment = appRep.save(new Appointment(appointmentBody.getAppoitnemtnDate(),appointmentBody.getStartTime(),appointmentBody.getEndTime(),appointmentBody.getLocation(),appointmentBody.getRoomNumber()));
-			return new ResponseEntity<>(_Appointment, HttpStatus.CREATED);
+			Optional<Staff> staffData = staffRep.findById(sid);
+			Optional<patient> patientData = patientRep.findById(uid);
+			if(staffData.isPresent()) {
+				if(patientData.isPresent()) {
+					appointmentBody.AddStaff(staffData.get());
+					appointmentBody.AddPatient(patientData.get());
+					appRep.save(appointmentBody);
+					MessageResponse msg = new MessageResponse("Appointment Set");
+					return new ResponseEntity<>(msg,HttpStatus.CREATED);
+				}
+				MessageResponse msg = new MessageResponse("Invalid patient user");
+				return new ResponseEntity<>(msg,HttpStatus.NOT_FOUND);
+			}
+			MessageResponse msg = new MessageResponse("Invalid user");
+			return new ResponseEntity<>(msg,HttpStatus.NOT_FOUND);
 		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+			MessageResponse msg = new MessageResponse(e.getMessage());
+			return new ResponseEntity<>(msg, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	@PutMapping("/appointment/{id}")

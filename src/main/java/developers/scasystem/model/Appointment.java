@@ -1,6 +1,8 @@
 package developers.scasystem.model;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -23,16 +26,16 @@ public class Appointment {
 	@GeneratedValue (strategy = GenerationType.AUTO)
 	private long id;
 	
-	@Column(name = "appointmentdate",nullable = false)
-	private Date AppoitnemtnDate;
+	@Column(name = "appointmentdate")
+	private String AppoitnemtnDate;
 	
-	@Column(name = "starttime",nullable = false)
+	@Column(name = "starttime")
 	private String StartTime;
 	
-	@Column(name = "endtime",nullable = false)
+	@Column(name = "endtime")
 	private String EndTime;
 	
-	@Column(name = "location",nullable = false)
+	@Column(name = "location")
 	private String Location;
 	
 	@Column(name = "roomnumber")
@@ -41,15 +44,11 @@ public class Appointment {
 	//appointment has one doctor 
 	//appointment has one patient
 	//patient has many appointment
-	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL, optional = false)
-	@JoinColumn(name = "staff_ID",nullable = false)
-	@JsonIgnore
-	private Staff Staff;
+	@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	private Set<Staff> Staff = new HashSet<>();
 	
-	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,optional = false)
-	@JoinColumn(name = "patient_ID",nullable = false)
-	@JsonIgnore
-	private patient patient;
+	@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	private Set<patient> patient = new HashSet<>();
 	
 	//an appointment may have one prescription
 	//the owner of the FK should take the JoinColumn
@@ -67,16 +66,11 @@ public class Appointment {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public patient getPatient() {
-		return patient;
-	}
-	public void setPatient(patient patient) {
-		patient = patient;
-	}
+
 	public Appointment() {
 		
 	}
-	public Appointment(Date AppointmentDate ,String StartTime, String EndTime, String Location, String RoomNumber ) {
+	public Appointment(String AppointmentDate ,String StartTime, String EndTime, String Location, String RoomNumber ) {
 		this.AppoitnemtnDate = AppointmentDate;
 		this.StartTime = StartTime;
 		this.EndTime = EndTime;
@@ -89,10 +83,10 @@ public class Appointment {
 	public void setId(long id) {
 		this.id = id;
 	}
-	public Date getAppoitnemtnDate() {
+	public String getAppoitnemtnDate() {
 		return AppoitnemtnDate;
 	}
-	public void setAppoitnemtnDate(Date appoitnemtnDate) {
+	public void setAppoitnemtnDate(String appoitnemtnDate) {
 		AppoitnemtnDate = appoitnemtnDate;
 	}
 	public String getStartTime() {
@@ -125,13 +119,42 @@ public class Appointment {
 	public void setRoomNumber(String roomNumber) {
 		roomnumber = roomNumber;
 	}
-	public Staff getStaff() {
+	public String getRoomnumber() {
+		return roomnumber;
+	}
+	public void setRoomnumber(String roomnumber) {
+		this.roomnumber = roomnumber;
+	}
+	public Set<Staff> getStaff() {
 		return Staff;
 	}
-	public void setStaff(Staff staff) {
-		this.Staff = staff;
+	public void setStaff(Set<Staff> staff) {
+		Staff = staff;
+	}
+	public Set<patient> getPatient() {
+		return patient;
+	}
+	public void setPatient(Set<patient> patient) {
+		this.patient = patient;
 	}
 	
+	public void AddStaff(Staff staff) {
+		this.Staff.add(staff);
+		staff.getAppointments().add(this);
+	}
+	public void RemoveStaff(Staff staff) {
+		this.Staff.remove(staff);
+		staff.getAppointments().remove(this);
+	}
+	
+	public void AddPatient(patient patient) {
+		this.patient.add(patient);
+		patient.getAppointments().add(this);
+	}
+	public void RemovePatient(patient patient) {
+		this.patient.remove(patient);
+		patient.getAppointments().remove(this);
+	}
 	
 	
 }

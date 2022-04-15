@@ -11,8 +11,14 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Table(name = "patient")
@@ -54,13 +60,14 @@ public class patient {
 	@Column(name = "city")
 	private String City;
 	
-	@OneToMany(mappedBy = "patient",cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+	@JsonIgnore
+	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+	@JoinTable(name="appointment_patient_tr",joinColumns ={
+			@JoinColumn(name="patientId",referencedColumnName = "id")},inverseJoinColumns = {
+					@JoinColumn(name="id",referencedColumnName = "id")
+			})
 	private Set<Appointment> appointments = new HashSet<>();
 	
-	public void AddAppointment(Appointment appointment) {
-		this.appointments.add(appointment);
-		appointment.setPatient(this);
-	}
 	
 	public void RemoveAppointment(Appointment appointment) {
 		this.appointments.remove(appointment);

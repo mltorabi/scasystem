@@ -17,6 +17,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -71,7 +72,13 @@ public class Staff {
 	private Set<Blog> blog = new HashSet<>();
 	
 	//a doctor may have many appointment
-	@OneToMany(mappedBy = "Staff", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+	
+	@JsonIgnore
+	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+	@JoinTable(name = "appointment_transaction",joinColumns = {
+			@JoinColumn(name="staffID",referencedColumnName = "id")},inverseJoinColumns = {
+					@JoinColumn(name = "id",referencedColumnName = "id")
+			})
 	private Set<Appointment> appointments = new HashSet<>();
 	
 	//a staff may upload many images
@@ -172,14 +179,6 @@ public class Staff {
 		Speciality = speciality;
 	}
 	
-	public void AddAppointment(Appointment appointment) {
-		this.appointments.add(appointment);
-		appointment.setStaff(this);
-	}	
-	
-	public void RemoveAppointment(Appointment appointment) {
-		this.appointments.remove(appointment);
-	}
 	
 	public void AddImage(Image image) {
 		this.images.add(image);

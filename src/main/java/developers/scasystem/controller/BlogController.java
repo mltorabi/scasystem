@@ -61,7 +61,7 @@ public class BlogController {
 				return new ResponseEntity<>(blogRepository.save(blog),HttpStatus.OK);
 			}
 			MessageResponse msg = new MessageResponse("Invalid user");
-			return new ResponseEntity<>(msg,HttpStatus.OK);
+			return new ResponseEntity<>(msg,HttpStatus.NOT_FOUND);
 		}catch (Exception e) {
 			MessageResponse msg = new MessageResponse("Server Error");
 			return new ResponseEntity<>(msg,HttpStatus.INTERNAL_SERVER_ERROR);
